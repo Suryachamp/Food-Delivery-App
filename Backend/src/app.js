@@ -10,8 +10,9 @@ const app=express();
 // 👇 yeh middleware data leke ayega taki hum data readable bana sake in auth.controller.js in req.body
 app.use(express.json());
 app.use(cookieParser());
+const frontendUrl = process.env.FRONTEND_URL ? process.env.FRONTEND_URL.replace(/\/$/, "") : "http://localhost:5173";
 app.use(cors({
-    origin: process.env.FRONTEND_URL || "http://localhost:5173",
+    origin: frontendUrl,
     credentials: true
 }));
 
