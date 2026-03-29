@@ -1,0 +1,78 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-sans: "Outfit", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+
+  --color-primary: #e51d38;
+  --color-primary-600: #cc152f;
+  --color-accent: #ff4757;
+  --color-success: #10b981;
+  --color-danger: #ef4444;
+
+  --color-bg-light: #fcfcfd;
+  --color-bg-dark: #000000;
+
+  --color-muted-light: #6b7280;
+  --color-muted-dark: #9ca3af;
+
+  --color-card-bg-light: rgba(255, 255, 255, 0.85);
+  --color-card-bg-dark: rgba(18, 18, 20, 0.8);
+
+  --color-glass-border-light: rgba(255, 255, 255, 0.3);
+  --color-glass-border-dark: rgba(255, 255, 255, 0.05);
+
+  --radius-premium: 12px;
+
+  --blur-premium: 8px;
+  --blur-premium-dark: 12px;
+
+  --shadow-premium: 0 10px 40px rgba(0, 0, 0, 0.06);
+  --shadow-premium-dark: 0 20px 50px rgba(0, 0, 0, 0.4);
+}
+
+/* Base Styles */
+@layer base {
+  * {
+    @apply box-border border-gray-200 dark:border-white/10;
+  }
+
+  html,
+  body,
+  #root {
+    @apply h-full m-0;
+  }
+
+  body {
+    @apply bg-white text-black font-sans transition-all duration-300 dark:bg-black dark:text-white;
+  }
+}
+
+/* Custom Utilities for Premium design */
+@layer utilities {
+  .bg-primary-gradient {
+    background-image: linear-gradient(135deg, #e51d38, #ff4d5a);
+  }
+
+  .bg-premium-radial-light {
+    background-image: radial-gradient(circle at top right, #ffffff, #f4f7fb);
+  }
+
+  .bg-premium-radial-dark {
+    background-image: radial-gradient(circle at top left, #0e0e10, #000000);
+  }
+
+  .glass-card {
+    @apply backdrop-blur-[8px] border border-solid border-white/30 bg-white/85 transition-all dark:backdrop-blur-[12px] dark:border-white/5 dark:bg-[#121214]/80;
+  }
+
+  /* Hide scrollbars but keep functionality */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+}
