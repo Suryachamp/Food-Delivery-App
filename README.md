@@ -1,4 +1,4 @@
-# 🍔 Premium Responsive Food Delivery App
+# 🍔 Food Delivery App
 
 A high-performance, mobile-first food delivery platform featuring a TikTok-style "Reel Feed" for discovering meals, seamless animations, and a premium "Phone Frame" desktop experience.
 
