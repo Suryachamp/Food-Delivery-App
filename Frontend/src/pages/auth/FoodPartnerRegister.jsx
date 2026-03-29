@@ -1,13 +1,13 @@
 import React from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import axios from 'axios'
+import api from '../../api/api'
 
 export default function FoodPartnerRegister(){
   const navigate = useNavigate();
   
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const businessName = e.target.businessName.value;
+    const name = e.target.businessName.value;
     const contactName = e.target.contactName.value;
     const phone = e.target.phone.value;
     const address = e.target.address.value;
@@ -15,17 +15,15 @@ export default function FoodPartnerRegister(){
     const password = e.target.password.value;
     
     try {
-      const response = await axios.post("http://localhost:3000/api/auth/food-partner/register", {
-        name: businessName,
+      await api.post("/api/auth/food-partner/register", {
+        name,
         contactName,
         phone,
         address,
         email,
         password
-      }, {
-        withCredentials: true
       });
-      navigate("/create-food");
+      navigate("/food-partner/login");
     } catch (error) {
       console.error("There was an error Registering", error);
       alert(error.response?.data?.message || "An error occurred during registration");

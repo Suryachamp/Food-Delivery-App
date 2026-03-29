@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import axios from 'axios'
+import api from '../../api/api'
 
 export default function UserRegister(){
     const navigate = useNavigate();
@@ -13,12 +13,10 @@ export default function UserRegister(){
         const password = e.target.password.value;
         
         try {
-            const response = await axios.post("http://localhost:3000/api/auth/user/register", {
+            await api.post("/api/auth/user/register", {
                 fullName: firstName + " " + lastName,
                 email,
                 password
-            }, {
-              withCredentials: true
             })
             navigate("/");  
         } catch (error) {

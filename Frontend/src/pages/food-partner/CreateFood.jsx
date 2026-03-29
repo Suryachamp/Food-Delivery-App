@@ -35,8 +35,7 @@ const CreateFood = () => {
       formData.append('description', description);
       formData.append('video', video);
 
-      const response = await axios.post('http://localhost:3000/api/food', formData, {
-        withCredentials: true,
+      await api.post('/api/food', formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }

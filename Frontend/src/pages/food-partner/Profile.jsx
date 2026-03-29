@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import { LogOut, ChevronLeft, Play } from 'lucide-react';
 import BottomNav from '../../components/BottomNav';
 import { motion } from 'framer-motion';
+import api from '../../api/api';
 
 const Profile = () => {
   const { id, partnerId } = useParams();
@@ -15,9 +15,7 @@ const Profile = () => {
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const response = await axios.get(`http://localhost:3000/api/food-partner/${activeId}`, {
-          withCredentials: true
-        });
+        const response = await api.get(`/api/food-partner/${activeId}`);
         setProfile(response.data.foodPartner);
         setVideos(response.data.foods || []);
       } catch (error) {
@@ -29,8 +27,8 @@ const Profile = () => {
 
   const handleLogout = async () => {
     try {
-      await axios.get('http://localhost:3000/api/auth/user/logout', { withCredentials: true });
-      await axios.get('http://localhost:3000/api/auth/food-partner/logout', { withCredentials: true });
+      await api.get('/api/auth/user/logout');
+      await api.get('/api/auth/food-partner/logout');
       navigate('/user/login');
     } catch {
       navigate('/user/login');

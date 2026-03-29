@@ -6,6 +6,6 @@ const connectDB=require('./src/db/db');
 // database connect karenge
 connectDB();
 
-app.listen(3000,()=>{
-    console.log("server has started running on port 3000");
+app.listen(process.env.PORT || 3000, () => {
+    console.log(`server has started running on port ${process.env.PORT || 3000}`);
 })

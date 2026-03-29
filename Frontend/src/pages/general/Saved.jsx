@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import BottomNav from '../../components/BottomNav';
+import React, { useState, useEffect } from 'react';
 import ReelFeed from '../../components/ReelFeed';
+import BottomNav from '../../components/BottomNav';
+import api from '../../api/api';
 import { Bookmark } from 'lucide-react';
 
 const Saved = () => {
@@ -9,20 +9,24 @@ const Saved = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    axios.get("http://localhost:3000/api/food/saved", { withCredentials: true })
-      .then(response => {
-        setVideos(response.data.foodItems || []);
-      })
-      .catch(error => console.error("Error fetching saved videos:", error))
-      .finally(() => setLoading(false));
+    const fetchSaved = async () => {
+      try {
+        const response = await api.get('/api/food/get-saved-foods');
+        setVideos(response.data.savedFoods || []);
+      } catch (error) {
+        console.error("Error fetching saved foods", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchSaved();
   }, []);
 
   async function likeVideo(item) {
-    const response = await axios.post("http://localhost:3000/api/food/like", { foodId: item._id }, { withCredentials: true });
-    if (response.data.message === "Food liked successfully") {
-      setVideos((prev) => prev.map((v) => v._id === item._id ? { ...v, likeCount: (v.likeCount || 0) + 1 } : v));
-    } else {
-      setVideos((prev) => prev.map((v) => v._id === item._id ? { ...v, likeCount: Math.max((v.likeCount || 0) - 1, 0) } : v));
+    try {
+      await api.post(`/api/food/like/${item._id}`);
+    } catch (error) {
+      console.error("Like failed", error);
     }
   }
 
