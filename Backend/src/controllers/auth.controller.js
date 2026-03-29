@@ -27,7 +27,7 @@ async function registerUser(req,res){
             password:hashedPassword
         })
 
-        const jwtSecretReg = process.env.JWT_SECRET_KEY;
+        const jwtSecretReg = process.env.JWT_SECRET;
         if(!jwtSecretReg){
             return res.status(500).json({ message: 'Server misconfiguration: JWT secret not set' });
         }
@@ -74,7 +74,7 @@ async function loginUser(req,res){
             })
         }
 
-        const jwtSecret = process.env.JWT_SECRET_KEY;
+        const jwtSecret = process.env.JWT_SECRET;
         if(!jwtSecret){
             return res.status(500).json({ message: 'Server misconfiguration: JWT secret not set' });
         }
@@ -134,7 +134,7 @@ async function registerFoodPartner(req,res){
             contactName
         })
 
-        const jwtSecretFP = process.env.JWT_SECRET_KEY;
+        const jwtSecretFP = process.env.JWT_SECRET;
         if(!jwtSecretFP){
             return res.status(500).json({ message: 'Server misconfiguration: JWT secret not set' });
         }
@@ -184,7 +184,7 @@ async function loginFoodPartner(req,res){
             })
         }
 
-        const jwtSecret2 = process.env.JWT_SECRET_KEY;
+        const jwtSecret2 = process.env.JWT_SECRET;
         if(!jwtSecret2){
             return res.status(500).json({ message: 'Server misconfiguration: JWT secret not set' });
         }
