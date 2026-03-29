@@ -39,9 +39,9 @@ const Home = () => {
     return (
         <>
             <ReelFeed
-                items={videos}
-                onLike={likeVideo}
-                onSave={saveVideo}
+                items={foods}
+                onLike={handleLike}
+                onSave={handleSave}
                 emptyMessage="No videos available."
             />
             <BottomNav />
