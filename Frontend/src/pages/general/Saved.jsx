@@ -31,7 +31,7 @@ const Saved = () => {
   }
 
   async function saveVideo(item) {
-    const response = await axios.post("http://localhost:3000/api/food/save", { foodId: item._id }, { withCredentials: true });
+    const response = await api.post("/api/food/save", { foodId: item._id });
     if (response.data.message !== "Food saved successfully") {
       setVideos((prev) => prev.filter((v) => v._id !== item._id));
     }

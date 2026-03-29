@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Home, Bookmark, LogOut, Sun, Moon } from 'lucide-react';
-import axios from 'axios';
+import api from '../api/api';
 import { useTheme } from '../context/ThemeContext.jsx';
 import { motion } from 'framer-motion';
 
@@ -15,8 +15,8 @@ const BottomNav = () => {
 
   const handleLogout = async () => {
     try {
-      await axios.get('http://localhost:3000/api/auth/user/logout', { withCredentials: true });
-      await axios.get('http://localhost:3000/api/auth/food-partner/logout', { withCredentials: true });
+      await api.get('/api/auth/user/logout');
+      await api.get('/api/auth/food-partner/logout');
       navigate('/user/login');
     } catch {
       navigate('/user/login');

@@ -1,7 +1,7 @@
 import React, { useState, useRef, useMemo, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { LogOut, Upload, X, Check } from 'lucide-react';
-import axios from 'axios';
+import api from '../../api/api';
 
 const CreateFood = () => {
   const [name, setName] = useState('');
@@ -56,7 +56,7 @@ const CreateFood = () => {
 
   const handleLogout = async () => {
     try {
-      await axios.get('http://localhost:3000/api/auth/food-partner/logout', { withCredentials: true });
+      await api.get('/api/auth/food-partner/logout');
       navigate('/food-partner/login');
     } catch (error) {
       console.error('Logout Error:', error);
