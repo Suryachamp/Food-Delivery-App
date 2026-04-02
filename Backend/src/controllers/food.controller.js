@@ -6,22 +6,35 @@ const likeModel=require('../models/likes.model');
 const saveModel=require('../models/save.model');
 
 async function createFood(req,res){
-    // Determine the native file extension provided by Multer (e.g. '.mp4')
-    const ext = req.file && req.file.originalname ? path.extname(req.file.originalname) : '';
-    
-    // Concat the randomly secure UUID algorithm sequentially with the extracted string
-    const fileUploadResult=await storageService.uploadFile(req.file.buffer, uuid() + ext);
-    
-    const foodItem=await foodModel.create({
-        name:req.body.name,
-        video:fileUploadResult.url,
-        description:req.body.description,
-        foodPartner:req.foodPartner._id 
-    });
-    res.status(201).json({
-        message:"food created successfully",   
-        data:foodItem
-    })
+    try {
+        if (!req.file) {
+            return res.status(400).json({ message: "No video file provided" });
+        }
+
+        // Determine the native file extension provided by Multer (e.g. '.mp4')
+        const ext = req.file && req.file.originalname ? path.extname(req.file.originalname) : '';
+        
+        // Concat the randomly secure UUID algorithm sequentially with the extracted string
+        const fileUploadResult = await storageService.uploadFile(req.file.buffer, uuid() + ext);
+        
+        const foodItem = await foodModel.create({
+            name: req.body.name,
+            video: fileUploadResult.url,
+            description: req.body.description,
+            foodPartner: req.foodPartner._id 
+        });
+
+        res.status(201).json({
+            message: "food created successfully",   
+            data: foodItem
+        });
+    } catch (error) {
+        console.error("Error in createFood:", error);
+        res.status(500).json({ 
+            message: "Failed to create food item", 
+            error: error.message 
+        });
+    }
 }
 
 async function getFoodItems(req,res){

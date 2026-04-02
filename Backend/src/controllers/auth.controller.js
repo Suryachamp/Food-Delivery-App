@@ -27,7 +27,7 @@ async function registerUser(req,res){
             password:hashedPassword
         })
 
-        const jwtSecretReg = process.env.JWT_SECRET;
+        const jwtSecretReg = process.env.JWT_SECRET_KEY;
         if(!jwtSecretReg){
             return res.status(500).json({ message: 'Server misconfiguration: JWT secret not set' });
         }
@@ -35,7 +35,14 @@ async function registerUser(req,res){
         const token=jwt.sign({
             id:user._id
         }, jwtSecretReg)
-        res.cookie("token",token);
+        
+        const cookieOptions = {
+            httpOnly: true,
+            secure: true, 
+            sameSite: 'none'
+        };
+        
+        res.cookie("token", token, cookieOptions);
         
         res.status(201).json({
             message:"User created successfully",
@@ -74,7 +81,7 @@ async function loginUser(req,res){
             })
         }
 
-        const jwtSecret = process.env.JWT_SECRET;
+        const jwtSecret = process.env.JWT_SECRET_KEY;
         if(!jwtSecret){
             return res.status(500).json({ message: 'Server misconfiguration: JWT secret not set' });
         }
@@ -83,7 +90,13 @@ async function loginUser(req,res){
             id:user._id,
         }, jwtSecret);
 
-        res.cookie("token",token);
+        const cookieOptions = {
+            httpOnly: true,
+            secure: true, 
+            sameSite: 'none'
+        };
+
+        res.cookie("token", token, cookieOptions);
 
         res.status(200).json({
             message:"User logged in successfully",
@@ -101,7 +114,11 @@ async function loginUser(req,res){
 
 // yeh humne logout api bana li hai user ka
 async function logoutUser(req,res){
-    res.clearCookie("token");
+    res.clearCookie("token", { 
+        httpOnly: true, 
+        secure: true, 
+        sameSite: 'none' 
+    });
     res.status(200).json({
         message:"User logged out successfully"
     })
@@ -134,7 +151,7 @@ async function registerFoodPartner(req,res){
             contactName
         })
 
-        const jwtSecretFP = process.env.JWT_SECRET;
+        const jwtSecretFP = process.env.JWT_SECRET_KEY;
         if(!jwtSecretFP){
             return res.status(500).json({ message: 'Server misconfiguration: JWT secret not set' });
         }
@@ -143,7 +160,13 @@ async function registerFoodPartner(req,res){
             id:foodpartner._id
         }, jwtSecretFP)
 
-        res.cookie("token",token);
+        const cookieOptions = {
+            httpOnly: true,
+            secure: true, 
+            sameSite: 'none'
+        };
+
+        res.cookie("token", token, cookieOptions);
         res.status(201).json({
             message:"Food Partner account created successfully",
             foodpartner:{
@@ -184,7 +207,7 @@ async function loginFoodPartner(req,res){
             })
         }
 
-        const jwtSecret2 = process.env.JWT_SECRET;
+        const jwtSecret2 = process.env.JWT_SECRET_KEY;
         if(!jwtSecret2){
             return res.status(500).json({ message: 'Server misconfiguration: JWT secret not set' });
         }
@@ -193,7 +216,13 @@ async function loginFoodPartner(req,res){
             id:foodpartner._id,
         }, jwtSecret2);
 
-        res.cookie("token",token);
+        const cookieOptions = {
+            httpOnly: true,
+            secure: true, 
+            sameSite: 'none'
+        };
+
+        res.cookie("token", token, cookieOptions);
 
         res.status(200).json({
             message:"Food Partner logged in successfully",
@@ -211,7 +240,11 @@ async function loginFoodPartner(req,res){
 
 // yeh humne logout api bana li hai foodpartner ka
 function logoutFoodPartner(req,res){
-    res.clearCookie("token");
+    res.clearCookie("token", { 
+        httpOnly: true, 
+        secure: true, 
+        sameSite: 'none' 
+    });
     res.status(200).json({
         message:"Food Partner logged out successfully"
     })
